@@ -3,5 +3,5 @@ dbg:
 run:
 	g++ -Wall -Wextra -O3 -std=c++17 -I. main.cpp -DLOCAL && ./a.out
 cp:
-	pbcopy < main.cpp
+	fish_clipboard_copy < main.cpp
 
