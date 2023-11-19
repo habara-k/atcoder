@@ -138,6 +138,15 @@ auto make_vec(const int (&d)[N]) {
 }
 // }}}
 
+// Fast IO Stream{{{
+struct fast_ios {
+    fast_ios() {
+        cin.tie(nullptr);
+        ios::sync_with_stdio(false);
+        cout << fixed << setprecision(16);
+    };
+} fast_ios_;
+// }}}
 
 int main() {
 }
