@@ -68,7 +68,7 @@ void __print() { cerr << endl; }
 template<class T, class... Ts> void __print(const T &a, const Ts &...b) {
   cerr << a;
   if (sizeof...(b)) cerr << ", ";
-  print(b...);
+  __print(b...);
 }
 #define dump(...) __dump(#__VA_ARGS__, __VA_ARGS__)
 template<class... T> void __dump(const char *s, const T &...a) {
