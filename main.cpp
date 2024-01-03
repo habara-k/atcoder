@@ -67,9 +67,11 @@ template<class T> bool chmin(T &x, const T &y) {
 template<class T> bool chmax(T &x, const T &y) {
   return y <= x ? false : (x = y, true);
 }
-int dx[] = {1, 0, -1, 0, 1, -1, -1, 1};
-int dy[] = {0, 1, 0, -1, 1, 1, -1, -1};
+const int dx[] = {1, 0, -1, 0, 1, -1, -1, 1};
+const int dy[] = {0, 1, 0, -1, 1, 1, -1, -1};
 const char *Yes = "Yes", *No = "No", *YES = "YES", *NO = "NO";
+const int inf = 1e9;
+const int64_t linf = 1e18;
 // }}}
 
 // Type{{{
