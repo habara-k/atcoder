@@ -16,44 +16,23 @@ using namespace atcoder;
 // }}}
 
 // Output{{{
-template<class T, class U>
-ostream &operator<<(ostream &os, const pair<T, U> &p);
-template<class T>
-ostream &operator<<(ostream &os, const vector<T> &v);
-template<class T, class U>
-ostream &operator<<(ostream &os, const map<T, U> &m);
-template<class T>
-ostream &operator<<(ostream &os, const set<T> &s);
-template<int M>
-ostream &operator<<(ostream &os, const static_modint<M> &x);
-
-template<class T, class U>
-ostream &operator<<(ostream &os, const pair<T, U> &p) {
-  return os << p.first << ':' << p.second;
-}
-template<class Iterable> ostream &__print_all(ostream &os, const Iterable &v) {
-  int a = 0;
-  for (const auto& e : v) {
-    if (a) os << ", ";
-    os << e;
-    a = 1;
+#ifdef LOCAL
+#include <cpp-dump/dump.hpp>
+struct cpp_dump_config {
+  cpp_dump_config() {
+    CPP_DUMP_SET_OPTION(log_label_func, cpp_dump::log_label::filename());
   }
+} cpp_dump_config;
+#define dump(...) cpp_dump(__VA_ARGS__)
+#else
+#define dump(...)
+#endif
+
+template<class T> ostream &operator<<(ostream &os, const vector<T> &v) {
+  for (const auto& e : v) os << e << ' ';
   return os;
 }
-template<class T>
-ostream &operator<<(ostream &os, const vector<T> &v) {
-  return __print_all(os << '[', v) << ']';
-}
-template<class T, class U>
-ostream &operator<<(ostream &os, const map<T, U> &m) {
-  return __print_all(os << '{', m) << '}';
-}
-template<class T>
-ostream &operator<<(ostream &os, const set<T> &s) {
-  return __print_all(os << '{', s) << '}';
-}
-template<int M>
-ostream &operator<<(ostream &os, const static_modint<M> &x) {
+template<int M> ostream &operator<<(ostream &os, const static_modint<M> &x) {
   return os << x.val();
 }
 
@@ -62,25 +41,6 @@ template<class T, class... Ts> void print(const T &a, const Ts &...b) {
   cout << a;
   if (sizeof...(b)) cout << ' ';
   print(b...);
-}
-
-#ifdef LOCAL
-void __dump() { cerr << endl; }
-template<class T, class... Ts> void __dump(const T &a, const Ts &...b) {
-  cerr << a;
-  if (sizeof...(b)) cerr << ", ";
-  __dump(b...);
-}
-#define dump(...) cerr << #__VA_ARGS__ << ": "; __dump(__VA_ARGS__);
-#else
-#define dump(...) void(0)
-#endif
-
-template<class T> void print_vec(const vector<T> &v) {
-  for (const auto& e : v) {
-    cout << e << ' ';
-  }
-  cout << endl;
 }
 // }}}
 
@@ -132,14 +92,14 @@ auto make_vec(const int (&d)[N]) {
 }
 // }}}
 
-// Fast IO Stream{{{
-struct fast_ios {
-  fast_ios() {
+// IO Stream Config {{{
+struct ios_config {
+  ios_config() {
     cin.tie(nullptr);
     ios::sync_with_stdio(false);
     cout << fixed << setprecision(16);
   };
-} fast_ios_;
+} ios_config;
 // }}}
 
 int main() {
