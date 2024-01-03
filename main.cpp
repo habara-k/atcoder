@@ -9,11 +9,10 @@ using namespace atcoder;
 // }}}
 
 // Macro{{{
-#define rep2(i, a, b) for(int i=(int)(a); i<(int)(b); ++i)
+#define rep2(i, a, b) for (auto i: views::iota(a, b))
 #define rep1(i, a) rep2(i, 0, a)
 #define overload2(a, b, c, d, ...) d
 #define rep(...) overload2(__VA_ARGS__, rep2, rep1)(__VA_ARGS__)
-#define all(v) v.begin(), v.end()
 // }}}
 
 // Output{{{
@@ -30,26 +29,28 @@ ostream &operator<<(ostream &os, const static_modint<M> &x);
 
 template<class T, class U>
 ostream &operator<<(ostream &os, const pair<T, U> &p) {
-  return os << p.first << ' ' << p.second;
+  return os << p.first << ':' << p.second;
 }
 template<class Iterable> ostream &__print_all(ostream &os, const Iterable &v) {
-  for (auto it = v.begin(); it != v.end(); ++it) {
-    if (it != v.begin()) os << ' ';
-    os << *it;
+  int a = 0;
+  for (const auto& e : v) {
+    if (a) os << ", ";
+    os << e;
+    a = 1;
   }
   return os;
 }
 template<class T>
 ostream &operator<<(ostream &os, const vector<T> &v) {
-  return __print_all(os, v);
+  return __print_all(os << '[', v) << ']';
 }
 template<class T, class U>
 ostream &operator<<(ostream &os, const map<T, U> &m) {
-  return __print_all(os, m);
+  return __print_all(os << '{', m) << '}';
 }
 template<class T>
 ostream &operator<<(ostream &os, const set<T> &s) {
-  return __print_all(os, s);
+  return __print_all(os << '{', s) << '}';
 }
 template<int M>
 ostream &operator<<(ostream &os, const static_modint<M> &x) {
@@ -64,39 +65,32 @@ template<class T, class... Ts> void print(const T &a, const Ts &...b) {
 }
 
 #ifdef LOCAL
-void __print() { cerr << endl; }
-template<class T, class... Ts> void __print(const T &a, const Ts &...b) {
+void __dump() { cerr << endl; }
+template<class T, class... Ts> void __dump(const T &a, const Ts &...b) {
   cerr << a;
   if (sizeof...(b)) cerr << ", ";
-  __print(b...);
+  __dump(b...);
 }
-#define dump(...) __dump(#__VA_ARGS__, __VA_ARGS__)
-template<class... T> void __dump(const char *s, const T &...a) {
-  cerr << s << ": ";
-  __print(a...);
-}
+#define dump(...) cerr << #__VA_ARGS__ << ": "; __dump(__VA_ARGS__);
 #else
 #define dump(...) void(0)
 #endif
+
+template<class T> void print_vec(const vector<T> &v) {
+  for (const auto& e : v) {
+    cout << e << ' ';
+  }
+  cout << endl;
+}
 // }}}
 
 // Input{{{
-template<class T> istream &operator>>(istream &is, vector<T> &v);
-template<class T, class U> istream &operator>>(istream &is, pair<T, U> &p);
-template<int M> istream &operator>>(istream &is, static_modint<M> &x);
-
 template<class T> istream &operator>>(istream &is, vector<T> &v) {
-  for (auto it = v.begin(); it != v.end(); ++it) {
-    is >> *it;
-  }
+  for (auto& e : v) is >> e;
   return is;
 }
-template<class T, class U> istream &operator>>(istream &is, pair<T, U> &p) {
-  return is >> p.first >> p.second;
-}
 template<int M> istream &operator>>(istream &is, static_modint<M> &x) {
-  long long val;
-  is >> val;
+  int64_t val; is >> val;
   x = val;
   return is;
 }
@@ -120,7 +114,7 @@ const char *Yes = "Yes", *No = "No", *YES = "YES", *NO = "NO";
 
 // Type{{{
 using mint = modint998244353;
-using ll = long long;
+using ll = int64_t;
 // }}}
 
 // Multidimensional vector{{{
@@ -140,11 +134,11 @@ auto make_vec(const int (&d)[N]) {
 
 // Fast IO Stream{{{
 struct fast_ios {
-    fast_ios() {
-        cin.tie(nullptr);
-        ios::sync_with_stdio(false);
-        cout << fixed << setprecision(16);
-    };
+  fast_ios() {
+    cin.tie(nullptr);
+    ios::sync_with_stdio(false);
+    cout << fixed << setprecision(16);
+  };
 } fast_ios_;
 // }}}
 
