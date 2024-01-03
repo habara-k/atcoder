@@ -28,12 +28,12 @@ struct cpp_dump_config {
 #define dump(...)
 #endif
 
+template<int M> auto &operator<<(ostream &os, const static_modint<M> &x) {
+  return os << x.val();
+}
 template<class T> auto &operator<<(ostream &os, const vector<T> &v) {
   for (const auto& e : v) os << e << ' ';
   return os;
-}
-template<int M> auto &operator<<(ostream &os, const static_modint<M> &x) {
-  return os << x.val();
 }
 
 void print() { cout << endl; }
