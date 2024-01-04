@@ -10,9 +10,10 @@ using namespace atcoder;
 
 // Macro{{{
 #define rep2(i, a, b) for (auto i: views::iota(a, b))
-#define rep1(i, a) rep2(i, 0, a)
+#define rep1(i, a) rep2(i, decltype(a){0}, a)
 #define overload2(a, b, c, d, ...) d
 #define rep(...) overload2(__VA_ARGS__, rep2, rep1)(__VA_ARGS__)
+#define all(v) begin(v), end(v)
 // }}}
 
 // Output{{{
@@ -45,13 +46,13 @@ template<class T, class... Ts> void print(const T &a, const Ts &...b) {
 // }}}
 
 // Input{{{
-template<class T> auto &operator>>(istream &is, vector<T> &v) {
-  for (auto& e : v) is >> e;
-  return is;
-}
 template<int M> auto &operator>>(istream &is, static_modint<M> &x) {
   int64_t val; is >> val;
   x = val;
+  return is;
+}
+template<class T> auto &operator>>(istream &is, vector<T> &v) {
+  for (auto& e : v) is >> e;
   return is;
 }
 
