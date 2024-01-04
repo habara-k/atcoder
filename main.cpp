@@ -105,6 +105,41 @@ struct ios_config {
 } ios_config;
 // }}}
 
+using fps = vector<mint>;
+
+mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
+  auto n = bit_ceil(max(p.size(), q.size()));
+  if (k==0) return p[0] / q[0];
+  p.resize(2*n), butterfly(p);
+  q.resize(2*n), butterfly(q);
+  static const internal::fft_info<mint> info;
+  const mint z = info.root[bit_width(n)];
+  auto doubling = [&](fps &a) {
+    auto b = fps{begin(a), begin(a)+n};
+    butterfly_inv(b);
+    mint r = 1 / mint(n);
+    rep(i, n) b[i] *= r, r *= z;
+    butterfly(b);
+    rep(i, n) a[i+n] = b[i];
+  };
+  for (;;) {
+    if (k&1) {
+      mint r = 1;
+      rep(i, n) {
+        p[i] = (p[2*i]*q[2*i+1] - p[2*i+1]*q[2*i]) * r;
+        r *= info.irate2[countr_one(i)];
+      }
+    } else {
+      rep(i, n) p[i] = p[2*i]*q[2*i+1] + p[2*i+1]*q[2*i];
+    }
+    rep(i, n) q[i] = q[2*i]*q[2*i+1]*2;
+    if ((k/=2) == 0) break;
+    doubling(p), doubling(q);
+  }
+  rep(i, 1u, n) p[0] += p[i], q[0] += q[i];
+  return p[0] / q[0];
+}
+
 int main() {
 }
 
