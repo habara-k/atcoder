@@ -122,13 +122,11 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
     butterfly(b);
     rep(i, n) a[i+n] = b[i];
   };
+  vector<mint> r(n); r[0]=1;
+  rep(i, n-1) r[i+1] = r[i]*info.irate2[countr_one(i)];
   for (;;) {
     if (k&1) {
-      mint r = 1;
-      rep(i, n) {
-        p[i] = (p[2*i]*q[2*i+1] - p[2*i+1]*q[2*i]) * r;
-        r *= info.irate2[countr_one(i)];
-      }
+      rep(i, n) p[i] = (p[2*i]*q[2*i+1] - p[2*i+1]*q[2*i]) * r[i];
     } else {
       rep(i, n) p[i] = p[2*i]*q[2*i+1] + p[2*i+1]*q[2*i];
     }
@@ -136,7 +134,7 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
     if ((k/=2) == 0) break;
     doubling(p), doubling(q);
   }
-  rep(i, 1u, n) p[0] += p[i], q[0] += q[i];
+  rep(i, n-1) p[0] += p[i+1], q[0] += q[i+1];
   return p[0] / q[0];
 }
 
