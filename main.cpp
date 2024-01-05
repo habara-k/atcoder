@@ -9,10 +9,13 @@ using namespace atcoder;
 // }}}
 
 // Macro{{{
+#define overload2(a, b, c, d, ...) d
 #define rep2(i, a, b) for (auto i: views::iota(a, b))
 #define rep1(i, a) rep2(i, decltype(a){0}, a)
-#define overload2(a, b, c, d, ...) d
 #define rep(...) overload2(__VA_ARGS__, rep2, rep1)(__VA_ARGS__)
+#define rrep2(i, a, b) for (auto i: views::iota(a, b) | views::reverse)
+#define rrep1(i, a) rrep2(i, decltype(a){0}, a)
+#define rrep(...) overload2(__VA_ARGS__, rrep2, rrep1)(__VA_ARGS__)
 #define all(v) begin(v), end(v)
 // }}}
 
@@ -78,6 +81,7 @@ const int64_t linf = 1e18;
 // Type{{{
 using mint = modint998244353;
 using ll = int64_t;
+using fps = vector<mint>;
 // }}}
 
 // Multidimensional vector{{{
@@ -105,8 +109,7 @@ struct ios_config {
 } ios_config;
 // }}}
 
-using fps = vector<mint>;
-
+// Library {{{
 mint bostan_mori(fps p, fps q, uint64_t k) {
   if (k==0) return p[0] / q[0];
   auto n = bit_ceil(max(p.size(), q.size()));
@@ -141,6 +144,7 @@ mint bostan_mori(fps p, fps q, uint64_t k) {
   }
   return (p[0]+p[1]) / (q[0]+q[1]);
 }
+// }}}
 
 int main() {
 }
