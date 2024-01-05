@@ -111,38 +111,19 @@ struct ios_config {
 
 // Library {{{
 mint bostan_mori(fps p, fps q, uint64_t k) {
-  if (k==0) return p[0] / q[0];
-  auto n = bit_ceil(max(p.size(), q.size()));
-  p.resize(2*n), butterfly(p);
-  q.resize(2*n), butterfly(q);
-  static const internal::fft_info<mint> info;
-  auto doubling = [&](fps &a) {
-    auto b = fps{begin(a), begin(a)+n};
-    butterfly_inv(b);
-    mint r = 1 / mint(n);
-    rep(i, n) b[i] *= r, r *= info.root[bit_width(n)];
-    butterfly(b);
-    rep(i, n) a[i+n] = b[i];
+  auto f = [&](fps a, bool odd) {
+    fps b;
+    for (int i=odd; i<ssize(a); i+=2) b.push_back(a[i]);
+    return b;
   };
-  auto lo = [&](fps &a) {
-    butterfly_inv(a);
-    a.resize(n/2), a.resize(n);
-    butterfly(a);
-  };
-  vector<mint> r(n); r[0]=1;
-  rep(i, n-1) r[i+1] = r[i]*info.irate2[countr_one(i)];
-  for (;;) {
-    while (k < n/2) lo(p), lo(q), n /= 2;
-    if (k&1) {
-      rep(i, n) p[i] = (p[2*i]*q[2*i+1] - p[2*i+1]*q[2*i]) * r[i];
-    } else {
-      rep(i, n) p[i] = p[2*i]*q[2*i+1] + p[2*i+1]*q[2*i];
-    }
-    rep(i, n) q[i] = q[2*i] * q[2*i+1] * 2;
-    if ((k /= 2) == 0) break;
-    doubling(p), doubling(q);
+  while (k) {
+    auto q2 = q;
+    for (int i=1; i<ssize(q); i+=2) q2[i] *= -1;
+    q = f(convolution(q, q2), 0);
+    p = f(convolution(p, q2), k&1);
+    k /= 2;
   }
-  return (p[0]+p[1]) / (q[0]+q[1]);
+  return p[0] / q[0];
 }
 // }}}
 
