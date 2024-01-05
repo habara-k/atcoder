@@ -141,19 +141,6 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
 }
 
 int main() {
-  input(int, d);
-  input(ll, k);
-  vector<mint> a(d), c(d);
-  read(a, c);
-
-  fps q(d+1);
-  q[0] = 1;
-  rep(i, d) q[i+1] = -c[i];
-
-  fps p = convolution(a, q);
-  p.resize(ssize(q)-1);
-
-  print(bostan_mori(std::move(p), std::move(q), k));
 }
 
 /* vim:set foldmethod=marker: */
