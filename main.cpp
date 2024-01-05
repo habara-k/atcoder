@@ -107,7 +107,8 @@ struct ios_config {
 
 using fps = vector<mint>;
 
-mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
+mint bostan_mori(fps p, fps q, uint64_t k) {
+  if (k==0) return p[0] / q[0];
   auto n = bit_ceil(max(p.size(), q.size()));
   p.resize(2*n), butterfly(p);
   q.resize(2*n), butterfly(q);
@@ -115,8 +116,8 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
   auto doubling = [&](fps &a) {
     auto b = fps{begin(a), begin(a)+n};
     butterfly_inv(b);
-    mint r = 1 / mint(n), z = info.root[bit_width(n)];
-    rep(i, n) b[i] *= r, r *= z;
+    mint r = 1 / mint(n);
+    rep(i, n) b[i] *= r, r *= info.root[bit_width(n)];
     butterfly(b);
     rep(i, n) a[i+n] = b[i];
   };
@@ -127,8 +128,7 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
   };
   vector<mint> r(n); r[0]=1;
   rep(i, n-1) r[i+1] = r[i]*info.irate2[countr_one(i)];
-  for (; k; k /= 2) {
-    doubling(p), doubling(q);
+  for (;;) {
     while (k < n/2) lo(p), lo(q), n /= 2;
     if (k&1) {
       rep(i, n) p[i] = (p[2*i]*q[2*i+1] - p[2*i+1]*q[2*i]) * r[i];
@@ -136,6 +136,8 @@ mint bostan_mori(fps &&p, fps &&q, uint64_t k) {
       rep(i, n) p[i] = p[2*i]*q[2*i+1] + p[2*i+1]*q[2*i];
     }
     rep(i, n) q[i] = q[2*i] * q[2*i+1] * 2;
+    if ((k /= 2) == 0) break;
+    doubling(p), doubling(q);
   }
   return (p[0]+p[1]) / (q[0]+q[1]);
 }
