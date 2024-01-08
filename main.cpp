@@ -120,14 +120,14 @@ mint C(int n, int r) {
 mint bostan_mori(fps p, fps q, uint64_t k) {
   auto f = [&](fps a, bool odd) {
     fps b;
-    for (int i=odd; i<ssize(a); i+=2) b.push_back(a[i]);
+    rep(i, odd, ssize(a), 2) b.push_back(a[i]);
     return b;
   };
   while (k) {
-    auto q2 = q;
-    for (int i=1; i<ssize(q); i+=2) q2[i] *= -1;
-    q = f(convolution(q, q2), 0);
-    p = f(convolution(p, q2), k&1);
+    auto r = q;
+    rep(i, 1, ssize(q), 2) r[i] *= -1;
+    q = f(convolution(q, r), 0);
+    p = f(convolution(p, r), k&1);
     k /= 2;
   }
   return p[0] / q[0];
