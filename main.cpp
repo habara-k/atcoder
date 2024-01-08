@@ -121,7 +121,7 @@ mint C(int n, int r) {
   if (n < 0 || r < 0 || n < r) return 0;
   return fact[n] * ifact[r] * ifact[n-r];
 }
-mint bostan_mori(fps p, fps q, uint64_t k) {
+mint bostan_mori(fps p, fps q, ll k) {
   auto f = [&](fps a, bool odd) {
     fps b;
     rep(i, odd, ssize(a), 2) b.push_back(a[i]);
