@@ -115,6 +115,7 @@ void init_fact(int n) {
   rep(i, n) fact[i+1] = fact[i] * (i+1);
 }
 mint C(int n, int r) {
+  if (n < 0 || r < 0 || n < r) return 0;
   return fact[n] / (fact[r] * fact[n-r]);
 }
 mint bostan_mori(fps p, fps q, uint64_t k) {
