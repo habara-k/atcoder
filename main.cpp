@@ -108,6 +108,15 @@ struct ios_config {
 // }}}
 
 // Library {{{
+vector<mint> fact;
+void initfactact(int n) {
+  fact.resize(n+1);
+  fact[0]=1;
+  rep(i, n) fact[i+1] = fact[i] * (i+1);
+}
+mint C(int n, int r) {
+  return fact[n] / (fact[r] * fact[n-r]);
+}
 mint bostan_mori(fps p, fps q, uint64_t k) {
   auto f = [&](fps a, bool odd) {
     fps b;
