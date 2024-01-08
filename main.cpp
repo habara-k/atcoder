@@ -109,7 +109,7 @@ struct ios_config {
 
 // Library {{{
 vector<mint> fact;
-void initfactact(int n) {
+void init_fact(int n) {
   fact.resize(n+1);
   fact[0]=1;
   rep(i, n) fact[i+1] = fact[i] * (i+1);
