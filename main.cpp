@@ -9,13 +9,11 @@ using namespace atcoder;
 // }}}
 
 // Macro{{{
-#define overload2(a, b, c, d, ...) d
-#define rep2(i, a, b) for (auto i: views::iota(a, b))
+#define overload2(a, b, c, d, e, ...) e
+#define rep3(i, a, b, c) for (auto i=a; i<b; i+=c)
+#define rep2(i, a, b) rep3(i, a, b, decltype(a){1})
 #define rep1(i, a) rep2(i, decltype(a){0}, a)
-#define rep(...) overload2(__VA_ARGS__, rep2, rep1)(__VA_ARGS__)
-#define rrep2(i, a, b) for (auto i: views::iota(a, b) | views::reverse)
-#define rrep1(i, a) rrep2(i, decltype(a){0}, a)
-#define rrep(...) overload2(__VA_ARGS__, rrep2, rrep1)(__VA_ARGS__)
+#define rep(...) overload2(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)
 #define all(v) begin(v), end(v)
 // }}}
 
