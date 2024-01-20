@@ -9,12 +9,15 @@ using namespace atcoder;
 // }}}
 
 // Macro{{{
-#define overload3(a, b, c, d, e, ...) e
 #define rep3(i, a, b, c) for (auto i=a; i<b; i+=c)
 #define rep2(i, a, b) rep3(i, a, b, decltype(a){1})
 #define rep1(i, a) rep2(i, decltype(a){0}, a)
+#define overload3(a, b, c, d, e, ...) e
 #define rep(...) overload3(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)
-#define rrep(i, a) for (auto i=a-1; i>=decltype(a){0}; --i)
+#define rrep2(i, a, b) for (auto i=b-1; i>=a; --i)
+#define rrep1(i, a) rrep2(i, decltype(a){0}, a)
+#define overload2(a, b, c, d, ...) d
+#define rrep(...) overload2(__VA_ARGS__, rrep2, rrep1)(__VA_ARGS__)
 #define all(v) begin(v), end(v)
 // }}}
 
@@ -73,8 +76,8 @@ template<class T> bool chmax(T &x, const T &y) {
 const int dx[] = {1, 0, -1, 0, 1, -1, -1, 1};
 const int dy[] = {0, 1, 0, -1, 1, 1, -1, -1};
 const char *Yes = "Yes", *No = "No", *YES = "YES", *NO = "NO";
-const int inf = 1e9;
-const int64_t linf = 1e18;
+const int INF = 1e9;
+const int64_t LINF = 1e18;
 // }}}
 
 // Type{{{
@@ -112,9 +115,9 @@ struct ios_config {
 vector<mint> fact, ifact;
 void init_fact(int n) {
   fact.resize(n+1), ifact.resize(n+1);
-  fact[0]=1;
+  fact[0] = 1;
   rep(i, n) fact[i+1] = fact[i] * (i+1);
-  ifact[n]=1/fact[n];
+  ifact[n] = 1 / fact[n];
   rrep(i, n) ifact[i] = ifact[i+1] * (i+1);
 }
 mint C(int n, int r) {
