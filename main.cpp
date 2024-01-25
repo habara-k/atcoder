@@ -1,11 +1,13 @@
 // Include{{{
 #include <bits/stdc++.h>
 #include <atcoder/all>
+#include <ext/pb_ds/assoc_container.hpp>
 // }}}
 
 // Namespace{{{
 using namespace std;
 using namespace atcoder;
+using namespace __gnu_pbds;
 // }}}
 
 // Macro{{{
@@ -84,6 +86,9 @@ const int64_t LINF = 1e18;
 using mint = modint998244353;
 using ll = int64_t;
 using fps = vector<mint>;
+using graph = vector<vector<int>>;
+template<class T>
+using sset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 // }}}
 
 // Multidimensional vector{{{
