@@ -86,9 +86,12 @@ const int64_t LINF = 1e18;
 using mint = modint998244353;
 using ll = int64_t;
 using fps = vector<mint>;
-using graph = vector<vector<int>>;
 template<class T>
-using sset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class K, class V>
+using ordered_map = tree<K, V, less<K>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class K, class V>
+using hash_map = gp_hash_table<K, V>;
 // }}}
 
 // Multidimensional vector{{{
