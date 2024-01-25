@@ -27,41 +27,23 @@ using namespace __gnu_pbds;
 #ifdef LOCAL
 #include <cpp-dump/dump.hpp>
 struct cpp_dump_config {
-  cpp_dump_config() {
-    CPP_DUMP_SET_OPTION(log_label_func, cpp_dump::log_label::filename());
-  }
+  cpp_dump_config() { CPP_DUMP_SET_OPTION(log_label_func, cpp_dump::log_label::filename()); }
 } cpp_dump_config;
 #define dump(...) cpp_dump(__VA_ARGS__)
 #else
 #define dump(...)
 #endif
 
-template<int M> auto &operator<<(ostream &os, const static_modint<M> &x) {
-  return os << x.val();
-}
-template<class T> auto &operator<<(ostream &os, const vector<T> &v) {
-  for (const auto& e : v) os << e << ' ';
-  return os;
-}
+template<int M> auto &operator<<(ostream &os, const static_modint<M> &x) { return os << x.val(); }
+template<class T> auto &operator<<(ostream &os, const vector<T> &v) { for (const auto& e : v) os << e << ' '; return os; }
 
-void print() { cout << endl; }
-template<class T, class... Ts> void print(const T &a, const Ts &...b) {
-  cout << a;
-  if (sizeof...(b)) cout << ' ';
-  print(b...);
-}
+void put() { cout << endl; }
+template<class T, class... U> void put(const T &a, const U &...b) { cout << a; if (sizeof...(b)) cout << ' '; put(b...); }
 // }}}
 
 // Input{{{
-template<int M> auto &operator>>(istream &is, static_modint<M> &x) {
-  int64_t val; is >> val;
-  x = val;
-  return is;
-}
-template<class T> auto &operator>>(istream &is, vector<T> &v) {
-  for (auto& e : v) is >> e;
-  return is;
-}
+template<int M> auto &operator>>(istream &is, static_modint<M> &x) { int64_t val; is >> val; x = val; return is; }
+template<class T> auto &operator>>(istream &is, vector<T> &v) { for (auto& e : v) is >> e; return is; }
 
 #define input(type, ...) type __VA_ARGS__; read(__VA_ARGS__)
 
@@ -69,12 +51,8 @@ template<class... T> void read(T &...a) { (cin >> ... >> a); }
 // }}}
 
 // Utils{{{
-template<class T> bool chmin(T &x, const T &y) {
-  return y >= x ? false : (x = y, true);
-}
-template<class T> bool chmax(T &x, const T &y) {
-  return y <= x ? false : (x = y, true);
-}
+template<class T> bool chmin(T &x, const T &y) { return y >= x ? false : (x = y, true); }
+template<class T> bool chmax(T &x, const T &y) { return y <= x ? false : (x = y, true); }
 const int dx[] = {1, 0, -1, 0, 1, -1, -1, 1};
 const int dy[] = {0, 1, 0, -1, 1, 1, -1, -1};
 const char *Yes = "Yes", *No = "No", *YES = "YES", *NO = "NO";
@@ -111,27 +89,19 @@ auto make_vec(const int (&d)[N]) {
 
 // IO Stream Config {{{
 struct ios_config {
-  ios_config() {
-    cin.tie(nullptr);
-    ios::sync_with_stdio(false);
-    cout << fixed << setprecision(16);
-  };
+  ios_config() { cin.tie(nullptr), ios::sync_with_stdio(false), cout << fixed << setprecision(16); };
 } ios_config;
 // }}}
 
 // Library {{{
 vector<mint> fact, ifact;
 void init_fact(int n) {
-  fact.resize(n+1), ifact.resize(n+1);
-  fact[0] = 1;
+  fact.resize(n+1), ifact.resize(n+1), fact[0] = 1;
   rep(i, n) fact[i+1] = fact[i] * (i+1);
   ifact[n] = 1 / fact[n];
   rrep(i, n) ifact[i] = ifact[i+1] * (i+1);
 }
-mint C(int n, int r) {
-  if (n < 0 || r < 0 || n < r) return 0;
-  return fact[n] * ifact[r] * ifact[n-r];
-}
+mint C(int n, int r) { return n < 0 || r < 0 || n < r ? 0 : fact[n] * ifact[r] * ifact[n-r]; }
 mint bostan_mori(fps p, fps q, ll k) {
   auto f = [&](fps a, bool odd) {
     fps b;
@@ -141,9 +111,7 @@ mint bostan_mori(fps p, fps q, ll k) {
   while (k) {
     auto r = q;
     rep(i, 1, ssize(q), 2) r[i] *= -1;
-    q = f(convolution(q, r), 0);
-    p = f(convolution(p, r), k&1);
-    k /= 2;
+    q = f(convolution(q, r), 0), p = f(convolution(p, r), k&1), k/=2;
   }
   return p[0] / q[0];
 }
