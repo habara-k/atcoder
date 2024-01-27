@@ -36,7 +36,6 @@ struct cpp_dump_config {
 
 template<int M> auto &operator<<(ostream &os, const static_modint<M> &x) { return os << x.val(); }
 template<class T> auto &operator<<(ostream &os, const vector<T> &v) { for (const auto& e : v) os << e << ' '; return os; }
-
 void put() { cout << endl; }
 template<class T, class... U> void put(const T &a, const U &...b) { cout << a; if (sizeof...(b)) cout << ' '; put(b...); }
 // }}}
@@ -44,9 +43,7 @@ template<class T, class... U> void put(const T &a, const U &...b) { cout << a; i
 // Input{{{
 template<int M> auto &operator>>(istream &is, static_modint<M> &x) { int64_t val; is >> val; x = val; return is; }
 template<class T> auto &operator>>(istream &is, vector<T> &v) { for (auto& e : v) is >> e; return is; }
-
 #define input(type, ...) type __VA_ARGS__; read(__VA_ARGS__)
-
 template<class... T> void read(T &...a) { (cin >> ... >> a); }
 // }}}
 
@@ -78,14 +75,12 @@ auto make_vec(const int (&d)[N], const T &a) {
   }
 }
 template<class T, int N>
-auto make_vec(const int (&d)[N]) {
-  return make_vec(d, T{});
-}
+auto make_vec(const int (&d)[N]) { return make_vec(d, T{}); }
 // }}}
 
 // IO Stream Config {{{
 struct ios_config {
-  ios_config() { cin.tie(nullptr), ios::sync_with_stdio(false), cout << fixed << setprecision(16); };
+  ios_config() { cin.tie(0), ios::sync_with_stdio(0), cout << fixed << setprecision(16); };
 } ios_config;
 // }}}
 
@@ -98,19 +93,6 @@ void init_fact(int n) {
   rrep(i, n) ifact[i] = ifact[i+1] * (i+1);
 }
 mint C(int n, int r) { return n < 0 || r < 0 || n < r ? 0 : fact[n] * ifact[r] * ifact[n-r]; }
-mint bostan_mori(fps p, fps q, ll k) {
-  auto f = [&](fps a, bool odd) {
-    fps b;
-    rep(i, odd, ssize(a), 2) b.push_back(a[i]);
-    return b;
-  };
-  while (k) {
-    auto r = q;
-    rep(i, 1, ssize(q), 2) r[i] *= -1;
-    q = f(convolution(q, r), 0), p = f(convolution(p, r), k&1), k/=2;
-  }
-  return p[0] / q[0];
-}
 // }}}
 
 int main() {
