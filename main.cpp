@@ -1,4 +1,5 @@
 // Include{{{
+#include "atcoder/segtree.hpp"
 #include <atcoder/all>
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -88,7 +89,6 @@ const int64_t LINF = 1e18;
 // Type{{{
 using mint = modint998244353;
 using ll = int64_t;
-using fps = vector<mint>;
 template <class T>
 using sset =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -129,6 +129,8 @@ mint C(int n, int r) {
 }
 // }}}
 
-int main() {}
+int main() {
+  // write codes here.
+}
 
 /* vim:set foldmethod=marker: */
